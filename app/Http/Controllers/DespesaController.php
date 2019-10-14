@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Despesa;
+use App\Categoria;
 use Illuminate\Http\Request;
 
 class DespesaController extends Controller
@@ -25,7 +26,8 @@ class DespesaController extends Controller
      */
     public function create()
     {
-        return view('despesa.create');
+        $categorias = Categoria::all();
+        return view('despesa.create', compact('categorias'));
     }
 
     /**
@@ -37,7 +39,7 @@ class DespesaController extends Controller
     public function store(Request $request)
     {
         $validateData = $request->validate([
-            'descricao' => 'required|mas:255',
+            'descricao' => 'required|max:255',
             'data' => 'required',
             'valor' => 'required',
             'categoria_id' => 'required'
@@ -67,7 +69,8 @@ class DespesaController extends Controller
     public function edit($id)
     {
         $despesa = Despesa::findOrFail($id);
-        return view('despesa.edit', compact('despesa'));
+        $categorias = Categoria::all();
+        return view('despesa.edit', compact('despesa', 'categorias'));
     }
 
     /**
@@ -80,7 +83,7 @@ class DespesaController extends Controller
     public function update(Request $request, $id)
     {
         $validateData = $request->validate([
-            'descricao' => 'required|mas:255',
+            'descricao' => 'required|max:255',
             'data' => 'required',
             'valor' => 'required',
             'categoria_id' => 'required'

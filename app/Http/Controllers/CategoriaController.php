@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Categoria;
+use App\Despesa;
 use Illuminate\Http\Request;
 
 class CategoriaController extends Controller
@@ -37,11 +38,11 @@ class CategoriaController extends Controller
     public function store(Request $request)
     {
         $validateData = $request->validate([
-            'descricao' => 'required|mas:255'
+            'descricao' => 'required|max:255'
         ]);
         $categoria = Categoria::create($validateData);
 
-        return redirect('/categoria')-> with('success','Categoria criada com sucesso!');
+        return redirect('/categoria')->with('success','Categoria criada com sucesso!');
     }
 
     /**
@@ -77,12 +78,11 @@ class CategoriaController extends Controller
     public function update(Request $request, $id)
     {
         $validateData = $request->validate([
-            'descricao' => 'required|mas:255'
+            'descricao' => 'required|max:255'
         ]);
+        Categoria::whereId($id)->update($validateData);
 
-        Categoria::whereId($id) -> update($validateData);
-
-        return redirect('/categoria') -> with('success','Categoria alterada com sucesso!');
+        return redirect('/categoria')->with('success','Categoria alterada com sucesso!');
     }
 
     /**
@@ -94,8 +94,7 @@ class CategoriaController extends Controller
     public function destroy($id)
     {
         $categoria = Categoria::findOrFail($id);
-        $categoria -> delete();
-
-        return redirect('/categoria') -> with('success','Categoria removida com sucesso!');
+        $categoria->delete();
+        return redirect('/categoria')->with('success','Categoria removida com sucesso!');
     }
 }
