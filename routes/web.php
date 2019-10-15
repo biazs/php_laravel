@@ -24,4 +24,4 @@ Route::resource('despesa','DespesaController')->name('index','despesa')->middlew
 Route::get('/home', 'HomeController@index')->name('home');
 
 
-//Route::get('despesa/{categoria}/categoria', 'DespesaController@categoria')->name('despesa.categoria');
+Route::get('despesa/{categoria}/categoria', 'DespesaController@categoria')->name('despesa.categoria');
